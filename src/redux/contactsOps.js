@@ -15,7 +15,7 @@ async (_, thunkAPI) => {
     const response = await axios.get("/contacts");
     return response.data;
   } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
+        return thunkAPI.rejectWithValue(error);
        }
      }
    );
