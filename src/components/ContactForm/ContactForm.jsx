@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/contacts/contacts-slice';
-import { getFilteredContacts } from '../../redux/contacts/contacts-selectors';
+import { addContact } from '../../redux/contacts/contactsSlice';
+import { selectFilteredContacts } from '../../redux/contacts/contacts-selectors';
 import css from './contactForm.module.css';
 import { nanoid } from 'nanoid';
 
@@ -9,7 +9,7 @@ const INITIAL_STATE = { name: '', number: '' };
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getFilteredContacts);
+  const contacts = useSelector(selectFilteredContacts);
   const [state, setState] = useState({ ...INITIAL_STATE });
 
   const handleChange = ({ target }) => {

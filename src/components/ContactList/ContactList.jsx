@@ -1,13 +1,14 @@
 // import React from 'react';
 import { useSelector } from 'react-redux';
 import Contact from '../Contact/Contact';
-import { getFilteredContacts } from '../../redux/contacts/contacts-selectors';
-import { deleteContact } from '../../redux/contacts/contacts-slice';
+import { selectFilteredContacts } from '../../redux/contacts/contacts-selectors';
+import { deleteContact } from '../../redux/contacts/contactsSlice';
 import css from './contactList.module.css';
+// import selectFilteredContacts from '../../redux/contacts/contactsSlice';
 
 
 const ContactList = () => {
-  const contacts = useSelector(getFilteredContacts);
+  const contacts = useSelector(selectFilteredContacts);
 
   return (
     <ol className={css.allContact}>

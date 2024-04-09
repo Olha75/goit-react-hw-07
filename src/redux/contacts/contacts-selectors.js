@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 const getContacts = store => store.contacts;
 const getFilter = store => store.filter;
 
-export const getFilteredContacts = createSelector(
+export const selectFilteredContacts = createSelector(
   [getContacts, getFilter],
   (contacts, filter) => {
     if (!filter) {
@@ -20,3 +20,8 @@ export const getFilteredContacts = createSelector(
     });
   }
 );
+
+// export const getIsLoading = state => state.tasks.isLoading;
+
+
+// export const getError = state => state.tasks.error;

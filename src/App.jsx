@@ -1,4 +1,4 @@
-// import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
@@ -6,19 +6,27 @@ import SearchBox from './components/SearchBox/SearchBox';
 import {
   addContact,
   deleteContact,
-} from '../src/redux/contacts/contacts-slice';
-// import { setFilter } from '../redux/filter/filter-slice';
-import { getFilteredContacts } from '../src/redux/contacts/contacts-selectors';
-// import css from '../index.css';
+} from '../src/redux/contacts/contactsSlice';
+// import Loader from
+// import Error from
+
+
+import { selectFilteredContacts } from '../src/redux/contacts/contacts-selectors';
+import { fetchContacts } from '../src/redux/contactsOps';
 
 const App = () => {
-  const contacts = useSelector(getFilteredContacts);
-  // const filter = useSelector(state => state.filter);
+  const contacts = useSelector(selectFilteredContacts);
+  // const {contacts,isLoading, error  } = useSelector(getFilteredContacts);
+
+ 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+
+
 
   const isDuplicate = ({ name }) => {
     const normalizedName = name.toLowerCase();
@@ -38,6 +46,16 @@ const App = () => {
   const onDeleteContact = id => {
     dispatch(deleteContact(id));
   };
+
+
+
+
+
+{/* <div>
+      {isLoading && <p>Loading tasks...</p>}
+      {error && <p>{error}</p>}
+      <p>{items.length > 0 && JSON.stringify(items, null, 2)}</p>
+    </div> */}
 
   return (
     <div className="blockPhonebook">
