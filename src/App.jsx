@@ -7,7 +7,7 @@ import {
   addContact,
   deleteContact,
 } from '../src/redux/contacts/contactsSlice';
-// import Loader from
+import Loader from '../src/components/Loader/Loader';
 // import Error from
 
 
@@ -18,7 +18,8 @@ const App = () => {
   const contacts = useSelector(selectFilteredContacts);
   // const {contacts,isLoading, error  } = useSelector(getFilteredContacts);
 
- 
+ const isLoading = useSelector(state=>state.contacts.loading);
+ const error = useSelector(state=>state.contacts.error); 
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -66,6 +67,9 @@ const App = () => {
       <h2 className="titleContacts">Contacts</h2>
       <div className="formContacts">
         <SearchBox />
+        {error && <Error>Error message</Error>}
+      {  isLoading && <Loader>Loading message</Loader>}
+      {/* <Loader>Loading message</Loader> */}
         {contacts.length > 0 ? (
           <ContactList items={contacts} deleteContact={onDeleteContact} />
         ) : (

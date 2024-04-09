@@ -12,8 +12,8 @@ import { fetchContacts } from "../contactsOps";
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: [],
-   //     isLoading: false,
-    // error: null,
+       isLoading: false,
+    error: null,
   reducers: {
     addContact: {
       reducer: (state, { payload }) => {
@@ -35,9 +35,15 @@ const contactsSlice = createSlice({
       // });
       },
 extraReucers:(builder)=>builder
-.addCase(fetchContacts.pending, ()=>{})
-.addCase(fetchContacts.fulfilled,()=>{})
-.addCase(fetchContacts.rejected,()=>{}),
+.addCase(fetchContacts.pending, (state)=>{
+  state.error = false;
+  state.loading = true;})
+.addCase(fetchContacts.fulfilled,(state, action)=>{
+  state.loading = false;
+  state.items=action.payload;})
+.addCase(fetchContacts.rejected,(state)=>
+{state.loading = false;
+state.error = true;}),
 
 
 
