@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ContactForm from './components/ContactForm/ContactForm';
-import ContactList from './components/ContactList/ContactList';
-import SearchBox from './components/SearchBox/SearchBox';
+import ContactForm from './ContactForm/ContactForm';
+import ContactList from './ContactList/ContactList';
+import SearchBox from './SearchBox/SearchBox';
 import {
   addContact,
   deleteContact, selectFilteredContacts
-} from '../src/redux/contacts/contactsSlice';
-import Loader from '../src/components/Loader/Loader';
+} from '../redux/contacts/contactsSlice';
+import Loader from './Loader/Loader';
 
 // import { selectFilteredContacts } from '../src/redux/contacts/contacts-selectors';
-import { fetchContacts } from '../src/redux/contactsOps';
-import ErrorBoundary from './components/ErrorBoundary';
+import { fetchContacts } from '../redux/contactsOps';
+import ErrorBoundary from './ErrorBoundary';
 
 const App = () => {
   const contacts = useSelector(selectFilteredContacts);
