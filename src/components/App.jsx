@@ -8,10 +8,10 @@ import {
   deleteContact, selectFilteredContacts
 } from '../redux/contacts/contactsSlice';
 import Loader from './Loader/Loader';
-
+import ErrorMessage from './ErrorMessage/ErrorMessage';
 // import { selectFilteredContacts } from '../src/redux/contacts/contacts-selectors';
 import { fetchContacts } from '../redux/contactsOps';
-import ErrorBoundary from './ErrorBoundary';
+
 
 const App = () => {
   const contacts = useSelector(selectFilteredContacts);
@@ -48,15 +48,6 @@ const App = () => {
   };
 
 
-
-
-
-{/* <div>
-      {isLoading && <p>Loading tasks...</p>}
-      {error && <p>{error}</p>}
-      <p>{items.length > 0 && JSON.stringify(items, null, 2)}</p>
-    </div> */}
-
   return (
     <div className="blockPhonebook">
       <h1 className="titlePhonebook">Phonebook</h1>
@@ -66,7 +57,7 @@ const App = () => {
       <h2 className="titleContacts">Contacts</h2>
       <div className="formContacts">
         <SearchBox />
-        {error && <ErrorBoundary>Error message</ErrorBoundary>}
+        {error && <ErrorMessage>Error message</ErrorMessage>}
       {  isLoading && <Loader>Loading message</Loader>}
       {/* <Loader>Loading message</Loader> */}
         {contacts.length > 0 ? (
