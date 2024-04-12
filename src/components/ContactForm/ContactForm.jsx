@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/contactsOps';
 import css from './contactForm.module.css';
 import { nanoid } from 'nanoid';
+import { selectContacts } from '../../redux/contacts/contactsSlice';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -22,9 +24,19 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim() || !number.trim()) {
-      alert('введіть ім’я або номер');
+      alert('Введіть ім’я або номер');
       return;
     }
+
+    const normalizedName = name.trim().toLowerCase();
+    const normalizedNumber = number.trim();
+
+    // Перевірка на дублікати
+    if (contacts.some(contact => contact.name.toLowerCase() === normalizedName || contact.number === normalizedNumber)) {
+      alert('Цей контакт вже існує!');
+      return;
+    }
+
     const newContact = {
       id: nanoid(),
       name,
@@ -78,94 +90,70 @@ export default ContactForm;
 
 
 // import { useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 // import { addContact } from '../../redux/contactsOps';
-// import { selectFilteredContacts } from '../../redux/contacts/contactsSlice';
 // import css from './contactForm.module.css';
 // import { nanoid } from 'nanoid';
 
-// const INITIAL_STATE = { name: '', number: '' };
-
 // const ContactForm = () => {
 //   const dispatch = useDispatch();
-//   const contacts = useSelector(selectFilteredContacts);
-//   const [state, setState] = useState({ ...INITIAL_STATE });
+//   const [name, setName] = useState('');
+//   const [number, setNumber] = useState('');
 
-//   const handleChange = ({ target }) => {
-//     const { name, value } = target;
-
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
 //     if (name === 'number') {
 //       const numericValue = value.replace(/\D/g, '');
-//       if (value !== numericValue) {
-//         alert('Введіть тільки цифри');
-//         return;
-//       }
-//       setState(prevState => ({
-//         ...prevState,
-//         [name]: numericValue,
-//       }));
+//       setNumber(numericValue);
 //     } else {
-//       setState(prevState => ({
-//         ...prevState,
-//         [name]: value,
-//       }));
+//       setName(value);
 //     }
 //   };
 
-//   const onAddContact = data => {
-//     const { name, number } = data;
-
-    
-//     const isDuplicate = contacts.some(
-//       contact => contact.name.toLowerCase() === name.toLowerCase() && contact.number === number
-//     );
-
-//     if (isDuplicate) {
-//       alert('Цей контакт вже існує!');
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     if (!name.trim() || !number.trim()) {
+//       alert('введіть ім’я або номер');
 //       return;
 //     }
-
-//     dispatch(addContact(data));
+//     const newContact = {
+//       id: nanoid(),
+//       name,
+//       number,
+//     };
+//     dispatch(addContact(newContact));
+//     setName('');
+//     setNumber('');
 //   };
-
-//   const handleSubmit = e => {
-//     e.preventDefault();
-//     onAddContact(state);
-//     setState({ ...INITIAL_STATE });
-//   };
-
-//   const { name, number } = state;
-//   const nameId = nanoid();
-//   const telId = nanoid();
 
 //   return (
 //     <form className={css.forma} onSubmit={handleSubmit}>
 //       <div>
-//         <label className={css.labelForm} htmlFor={nameId}>
+//         <label className={css.labelForm} htmlFor="name">
 //           Name
 //         </label>
 //         <input
 //           className={css.inpForm}
 //           value={name}
 //           onChange={handleChange}
-//           id={nameId}
+//           id="name"
 //           type="text"
 //           name="name"
 //           required
 //           placeholder="Введіть ім'я"
 //         />
-//         <label className={css.labelForm} htmlFor={telId}>
+//         <label className={css.labelForm} htmlFor="number">
 //           Number
 //         </label>
 //         <input
 //           className={css.inpForm}
 //           value={number}
 //           onChange={handleChange}
-//           id={telId}
+//           id="number"
 //           type="tel"
 //           name="number"
 //           required
-//           placeholder="Введіть номер телефона"
+//           placeholder="Введіть номер"
 //         />
 //         <button className={css.btnForm} type="submit">
 //           Add contact
@@ -176,4 +164,5 @@ export default ContactForm;
 // };
 
 // export default ContactForm;
+
 

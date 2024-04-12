@@ -3,33 +3,36 @@ import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import SearchBox from './SearchBox/SearchBox';
-import {  selectError, selectFilteredContacts, selectLoading} from '../redux/contacts/contactsSlice';
+import { selectError, selectFilteredContacts, selectLoading, selectContacts } from '../redux/contacts/contactsSlice';
 import Loader from './Loader/Loader';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
-import { fetchContacts, addContact,  deleteContact } from '../redux/contactsOps';
-
+import { fetchContacts, addContact, deleteContact } from '../redux/contactsOps';
 
 const App = () => {
   const contacts = useSelector(selectFilteredContacts);
- 
- const isLoading = useSelector(selectLoading);
- const error = useSelector(selectError); 
+  const allContacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectLoading);
+  const error = useSelector(selectError); 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const isDuplicate = ({ name }) => {
-    const normalizedName = name.toLowerCase();
-    return contacts.some(
-      contact => contact.name.toLowerCase() === normalizedName
+  const isDuplicate = ({ name, number }) => {
+    const normalizedName = name.trim().toLowerCase();
+    const normalizedNumber = number.trim();
+    return allContacts.some(
+      contact => 
+        contact.name.trim().toLowerCase() === normalizedName ||
+        contact.number.trim() === normalizedNumber
     );
   };
 
   const onAddContact = data => {
     if (isDuplicate(data)) {
-      return alert('Цей контакт вже існує!');
+      alert('Цей контакт вже існує!');
+      return;
     }
     const action = addContact(data);
     dispatch(action);
@@ -38,7 +41,6 @@ const App = () => {
   const onDeleteContact = id => {
     dispatch(deleteContact(id));
   };
-
 
   return (
     <div className="blockPhonebook">
@@ -50,12 +52,11 @@ const App = () => {
       <div className="formContacts">
         <SearchBox />
         {error && <ErrorMessage>Error message</ErrorMessage>}
-      { isLoading && <Loader>Loading message</Loader>}
-     
+        {isLoading && <Loader>Loading message</Loader>}
         {contacts.length > 0 ? (
           <ContactList items={contacts} deleteContact={onDeleteContact} />
         ) : (
-          <p className="message">Збережених контактів ще немає</p>
+          <p className="message">У Вас ще немає збережених контактів</p>
         )}
       </div>
     </div>
@@ -63,3 +64,38 @@ const App = () => {
 };
 
 export default App;
+
+// import { useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
+// import ContactForm from './ContactForm/ContactForm';
+// import ContactList from './ContactList/ContactList';
+// import SearchBox from './SearchBox/SearchBox';
+// import Loader from './Loader/Loader';
+// import ErrorMessage from './ErrorMessage/ErrorMessage';
+// import { fetchContacts } from '../redux/contactsOps';
+
+// const App = () => {
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     dispatch(fetchContacts());
+//   }, [dispatch]);
+
+//   return (
+//     <div className="blockPhonebook">
+//       <h1 className="titlePhonebook">Phonebook</h1>
+//       <div>
+//         <ContactForm />
+//       </div>
+//       <h2 className="titleContacts">Contacts</h2>
+//       <div className="formContacts">
+//         <SearchBox />
+//         <ErrorMessage />
+//         <Loader />
+//         <ContactList />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default App;

@@ -35,3 +35,33 @@ return (
 };
 
 export default ContactList;
+
+// import { useSelector } from 'react-redux';
+// import Contact from '../Contact/Contact';
+// import { createSelector } from '@reduxjs/toolkit';
+// import { selectContacts } from '../../redux/contacts/contactsSlice';
+// import { selectNameFilter } from '../../redux/filter/filtersSlice';
+// import css from './contactList.module.css';
+
+// const selectFilteredContacts = createSelector(
+//   [selectContacts, selectNameFilter],
+//   (contacts, nameFilter) => {
+//     return contacts.filter(contact =>
+//       contact.name.toLowerCase().includes(nameFilter.toLowerCase()) || contact.number.includes(nameFilter)
+//     );
+//   }
+// );
+
+// const ContactList = () => {
+//   const contacts = useSelector(selectFilteredContacts);
+
+//   return (
+//     <ol className={css.allContact}>
+//       {contacts.map(contact => (
+//         <Contact key={contact.id} contact={contact} />
+//       ))}
+//     </ol>
+//   );
+// };
+
+// export default ContactList;
