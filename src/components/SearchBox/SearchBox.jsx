@@ -1,12 +1,14 @@
-import { useId } from 'react';
+// import { useId } from 'react';
+import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from 'react-redux';
 import css from './searchBox.module.css';
 import { changeFilter, selectNameFilter } from '../../redux/filter/filtersSlice';
+// import { nanoid } from '@reduxjs/toolkit';
 
 export default function SearchBar() {
   const dispatch = useDispatch();
   const value = useSelector(selectNameFilter);
-  const searchId = useId();
+  const searchId = nanoid();
 
   return (
     <div className={css.conteinerFiltr}>

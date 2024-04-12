@@ -34,6 +34,4 @@ return (
 );
 };
 
-
-
 export default ContactList;

@@ -56,11 +56,21 @@ export const selectContacts = state => state.contacts.items;
 export const selectLoading = state => state.contacts.loading;
 export const selectError = state => state.contacts.error;
 
+// export const selectFilteredContacts = createSelector(
+//   [selectContacts, selectNameFilter],
+//   (contacts, nameFilter) => {
+//     return contacts.filter(contact =>
+//       contact.name.toLowerCase().includes(filter.toLowerCase()) || contact.number.includes(filter)
+//     // return contacts.filter(contact =>
+//     //   contact.name.toLowerCase().includes(nameFilter.toLowerCase())
+//     );
+//   }
+// );
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],
   (contacts, nameFilter) => {
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(nameFilter.toLowerCase())
+      contact.name.toLowerCase().includes(nameFilter.toLowerCase()) || contact.number.includes(nameFilter)
     );
   }
 );

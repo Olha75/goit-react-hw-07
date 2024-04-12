@@ -1,3 +1,82 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsOps';
+import css from './contactForm.module.css';
+import { nanoid } from 'nanoid';
+
+const ContactForm = () => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'number') {
+      const numericValue = value.replace(/\D/g, '');
+      setNumber(numericValue);
+    } else {
+      setName(value);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name.trim() || !number.trim()) {
+      alert('введіть ім’я або номер');
+      return;
+    }
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+    dispatch(addContact(newContact));
+    setName('');
+    setNumber('');
+  };
+
+  return (
+    <form className={css.forma} onSubmit={handleSubmit}>
+      <div>
+        <label className={css.labelForm} htmlFor="name">
+          Name
+        </label>
+        <input
+          className={css.inpForm}
+          value={name}
+          onChange={handleChange}
+          id="name"
+          type="text"
+          name="name"
+          required
+          placeholder="Введіть ім'я"
+        />
+        <label className={css.labelForm} htmlFor="number">
+          Number
+        </label>
+        <input
+          className={css.inpForm}
+          value={number}
+          onChange={handleChange}
+          id="number"
+          type="tel"
+          name="number"
+          required
+          placeholder="Введіть номер"
+        />
+        <button className={css.btnForm} type="submit">
+          Add contact
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default ContactForm;
+
+
+
+
 // import { useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { addContact } from '../../redux/contactsOps';
@@ -98,78 +177,3 @@
 
 // export default ContactForm;
 
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsOps';
-import css from './contactForm.module.css';
-import { nanoid } from 'nanoid';
-
-const ContactForm = () => {
-  const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'number') {
-      const numericValue = value.replace(/\D/g, '');
-      setNumber(numericValue);
-    } else {
-      setName(value);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!name.trim() || !number.trim()) {
-      alert('Please enter both name and number');
-      return;
-    }
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-    dispatch(addContact(newContact));
-    setName('');
-    setNumber('');
-  };
-
-  return (
-    <form className={css.forma} onSubmit={handleSubmit}>
-      <div>
-        <label className={css.labelForm} htmlFor="name">
-          Name
-        </label>
-        <input
-          className={css.inpForm}
-          value={name}
-          onChange={handleChange}
-          id="name"
-          type="text"
-          name="name"
-          required
-          placeholder="Enter name"
-        />
-        <label className={css.labelForm} htmlFor="number">
-          Number
-        </label>
-        <input
-          className={css.inpForm}
-          value={number}
-          onChange={handleChange}
-          id="number"
-          type="tel"
-          name="number"
-          required
-          placeholder="Enter phone number"
-        />
-        <button className={css.btnForm} type="submit">
-          Add contact
-        </button>
-      </div>
-    </form>
-  );
-};
-
-export default ContactForm;
