@@ -5,11 +5,11 @@ import ContactList from './components/ContactList/ContactList';
 import SearchBox from './components/SearchBox/SearchBox';
 import {
   addContact,
-  deleteContact,
+  deleteContact, selectFilteredContacts
 } from '../src/redux/contacts/contactsSlice';
 import Loader from '../src/components/Loader/Loader';
 
-import { selectFilteredContacts } from '../src/redux/contacts/contacts-selectors';
+// import { selectFilteredContacts } from '../src/redux/contacts/contacts-selectors';
 import { fetchContacts } from '../src/redux/contactsOps';
 import ErrorBoundary from './components/ErrorBoundary';
 

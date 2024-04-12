@@ -65,6 +65,34 @@ export const { addContact, deleteContact } = contactsSlice.actions;
 
 export default contactsSlice.reducer;
 
+import { createSelector } from 'reselect';
+
+const getContacts = store => store.contacts;
+const getFilter = store => store.filter;
+
+export const selectFilteredContacts = createSelector(
+  [getContacts, getFilter],
+  (contacts, filter) => {
+    if (!filter) {
+      return contacts;
+    }
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(({ name, number }) => {
+      const normalizedName = name.toLowerCase();
+      const normalizedNumber = number.toLowerCase(); 
+      return (
+        normalizedName.includes(normalizedFilter) ||
+        normalizedNumber.includes(normalizedFilter)
+      );
+    });
+  }
+);
+
+
+
+
+
+
 // export const { fetchingInProgress, fetchingSuccess, fetchingError } =
 //   tasksSlice.actions;
 
