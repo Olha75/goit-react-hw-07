@@ -3,14 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import SearchBox from './SearchBox/SearchBox';
-import {
-  addContact,
-  deleteContact, selectFilteredContacts
-} from '../redux/contacts/contactsSlice';
+import {  selectFilteredContacts} from '../redux/contacts/contactsSlice';
 import Loader from './Loader/Loader';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
-// import { selectFilteredContacts } from '../src/redux/contacts/contacts-selectors';
-import { fetchContacts } from '../redux/contactsOps';
+import { fetchContacts, addContact,  deleteContact } from '../redux/contactsOps';
 
 
 const App = () => {
@@ -24,9 +20,6 @@ const App = () => {
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
-
-
-
 
   const isDuplicate = ({ name }) => {
     const normalizedName = name.toLowerCase();

@@ -1,13 +1,11 @@
 import { useDispatch } from 'react-redux';
 import css from './contact.module.css';
-import { deleteContact } from '../../redux/contacts/contactsSlice';
+import { deleteContact } from '../../redux/contactsOps';
 
-const Contact = ({ id, name, number }) => {
-  const dispatch = useDispatch();
 
-  const handleDelete = () => {
-    dispatch(deleteContact(id));
-  };
+  export default function Contact({ contact: { id, name, number } }) {
+    const dispatch = useDispatch();
+    const handleDelete = () => dispatch(deleteContact(id));
 
   return (
     <li className={css.contactsItem}>
@@ -19,4 +17,3 @@ const Contact = ({ id, name, number }) => {
   );
 };
 
-export default Contact;
