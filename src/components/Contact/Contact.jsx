@@ -15,5 +15,5 @@ import { deleteContact } from '../../redux/contactsOps';
       </button>
     </li>
   );
-};
+}
 

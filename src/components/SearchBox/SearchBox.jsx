@@ -23,6 +23,6 @@ export default function SearchBar() {
       </label>
     </div>
   );
-};
+}
 
 

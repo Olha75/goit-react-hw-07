@@ -26,11 +26,11 @@ const ContactList = () => {
 // };
 
 return (
-  <ul>
+  <ol className={css.allContact}>
     {contacts.map(contact => (
       <Contact key={contact.id} contact={contact} />
     ))}
-  </ul>
+  </ol>
 );
 };
 
