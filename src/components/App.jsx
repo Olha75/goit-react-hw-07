@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import SearchBox from './SearchBox/SearchBox';
-import { selectError, selectFilteredContacts, selectLoading, selectContacts } from '../redux/contacts/contactsSlice';
+import { selectError, selectFilteredContacts, selectLoading, selectContacts } from '../redux/contactsSlice';
 import Loader from './Loader/Loader';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 import { fetchContacts, addContact, deleteContact } from '../redux/contactsOps';
@@ -65,37 +65,3 @@ const App = () => {
 
 export default App;
 
-// import { useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
-// import ContactForm from './ContactForm/ContactForm';
-// import ContactList from './ContactList/ContactList';
-// import SearchBox from './SearchBox/SearchBox';
-// import Loader from './Loader/Loader';
-// import ErrorMessage from './ErrorMessage/ErrorMessage';
-// import { fetchContacts } from '../redux/contactsOps';
-
-// const App = () => {
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     dispatch(fetchContacts());
-//   }, [dispatch]);
-
-//   return (
-//     <div className="blockPhonebook">
-//       <h1 className="titlePhonebook">Phonebook</h1>
-//       <div>
-//         <ContactForm />
-//       </div>
-//       <h2 className="titleContacts">Contacts</h2>
-//       <div className="formContacts">
-//         <SearchBox />
-//         <ErrorMessage />
-//         <Loader />
-//         <ContactList />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default App;
